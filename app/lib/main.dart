@@ -71,7 +71,7 @@ class _TodoAppState extends State<TodoApp> {
                       primary: btnColor,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
-                        vertical: 18,
+                        vertical: 20,
                       ),
                     ),
                     icon: const Icon(Icons.add),
