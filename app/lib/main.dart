@@ -3,6 +3,8 @@ import 'package:app/Models/task_model.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  var db = DBProvider().database;
+
   runApp(const MyApp());
 }
 
@@ -80,9 +82,51 @@ class _TodoAppState extends State<TodoApp> {
                                 taskData.data![index]['creationDate'] as String,
                               ).day.toString();
 
-                              return Container();
+                              print(index);
 
-                              //taskData.data.noSuchMethod()
+                              // Todo List Card
+                              return Card(
+                                color: secondColor,
+                                child: InkWell(
+                                  child: Row(
+                                    children: [
+                                      // * Task Date
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          right: 12,
+                                        ),
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          taskData.data!.length.toString(),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      // * Task
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            task,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
                             },
                           ),
                         );
@@ -96,10 +140,8 @@ class _TodoAppState extends State<TodoApp> {
                       }
                     }
                   case ConnectionState.none:
-                    // TODO: Handle this case.
                     break;
                   case ConnectionState.active:
-                    // TODO: Handle this case.
                     break;
                 }
 
@@ -157,7 +199,16 @@ class _TodoAppState extends State<TodoApp> {
                         dateTime: DateTime.now(),
                       );
 
+                      Task newTask2 = Task(
+                        task: "$newTaskTxt 2",
+                        dateTime: DateTime.now(),
+                      );
+
+                      var lastId = newTask.id;
+                      lastId = newTask.id + 1;
+
                       DBProvider.insertObject(newTask, 'tasks');
+                      DBProvider.insertObject(newTask2, 'tasks');
                     },
                   ),
                 ),

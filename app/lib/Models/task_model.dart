@@ -11,7 +11,7 @@ class Task implements IObjectModel {
 
   @override
   set id(int _id) {
-    id = _id;
+    id = _id + 1;
   }
 
   /// Turn data into a `Map`

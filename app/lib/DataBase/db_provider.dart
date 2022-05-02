@@ -18,6 +18,8 @@ class DBProvider {
     return _instance;
   }
 
+  static late Database _database;
+
   Future<Database> get database async {
     return await _initDatabase();
   }
@@ -34,7 +36,7 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
 
     // Open the database and store the reference.
-    return openDatabase(
+    var db = openDatabase(
       join(documentsDirectory.path, 'todo_app_db.db'),
       onCreate: (db, version) {
         // Run the CREATE TABLE statement on the database.
@@ -44,17 +46,19 @@ class DBProvider {
       },
       version: 1,
     );
+
+    _database = await db;
+
+    return db;
   }
 
   static Future<void> insertObject(IObjectModel object, String table) async {
-    // Get a reference to the database
-    final db = await _instance.database;
-
     // Insert an Object (Any data, like in this example a dog) into the correct table.
     // You might also specify the `conflictAlgorithm` to use in case the same dog is inserted twice.
     //
     // In this case, replace any previous data.
-    await db.insert(
+
+    await _database.insert(
       table,
       object.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -62,10 +66,8 @@ class DBProvider {
   }
 
   static Future<List<Map<String, Object?>>> getObjects(String table) async {
-    final db = await _instance.database;
-
     // This is a helper to query a table and return the items found
-    var res = await db.query(table);
+    var res = await _database.query(table);
 
     var resultMap = res.toList();
     return resultMap;
@@ -73,18 +75,13 @@ class DBProvider {
 
   static Future<List<IObjectModel>> retrieveObjects(
       IObjectModel object, String table) async {
-    // Get a reference to the database
-    final db = await _instance.database;
-
-    final List<Map<String, dynamic>> queryMaps = await db.query(table);
+    final List<Map<String, dynamic>> queryMaps = await _database.query(table);
 
     return object.queryToList(queryMaps);
   }
 
   static Future<void> updateObject(IObjectModel object, String table) async {
-    final db = await _instance.database;
-
-    await db.update(
+    await _database.update(
       table,
       object.toMap(),
       where: 'id=?',
@@ -94,8 +91,6 @@ class DBProvider {
   }
 
   static Future<void> deleteObject(int id, String table) async {
-    final db = await _instance.database;
-
-    await db.delete(table, where: 'id=?', whereArgs: [id]);
+    await _database.delete(table, where: 'id=?', whereArgs: [id]);
   }
 }
