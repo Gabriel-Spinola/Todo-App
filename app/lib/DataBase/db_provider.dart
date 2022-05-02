@@ -35,7 +35,7 @@ class DBProvider {
 
     // Open the database and store the reference.
     return openDatabase(
-      join(documentsDirectory.path, 'doggie_database.db'),
+      join(documentsDirectory.path, 'todo_app_db.db'),
       onCreate: (db, version) {
         // Run the CREATE TABLE statement on the database.
         return db.execute(

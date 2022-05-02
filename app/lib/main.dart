@@ -30,10 +30,13 @@ class _TodoAppState extends State<TodoApp> {
   Color btnColor = const Color(0xFFff955b);
   Color editColor = const Color(0xFF4044cc);
 
+  TextEditingController inputController = TextEditingController();
+  String newTaskTxt = "";
+
   Future<List<Map<String, Object?>>> getTask() async {
     //final testTask = Task(id: 0, task: "TestTask", dateTime: DateTime(2022));
 
-//    DBProvider.insertObject(testTask, 'tasks');
+    // DBProvider.insertObject(testTask, 'tasks');
 
     final tasks = await DBProvider.getObjects('tasks');
 
@@ -115,10 +118,11 @@ class _TodoAppState extends State<TodoApp> {
             ),
             child: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: TextField(
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
+                    controller: inputController,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       hintText: 'Type a new Task',
@@ -142,7 +146,19 @@ class _TodoAppState extends State<TodoApp> {
                     ),
                     icon: const Icon(Icons.add),
                     label: const Text('Add Task'),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        newTaskTxt = inputController.text.toString();
+                        inputController.text = "";
+                      });
+
+                      Task newTask = Task(
+                        task: newTaskTxt,
+                        dateTime: DateTime.now(),
+                      );
+
+                      DBProvider.insertObject(newTask, 'tasks');
+                    },
                   ),
                 ),
               ],

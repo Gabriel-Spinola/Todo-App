@@ -1,12 +1,13 @@
 import './object_model.dart';
 
 class Task implements IObjectModel {
+  @override
   final int id;
   final String task;
   final DateTime dateTime;
 
   // ! I mean, the guy in the tutorial didn't had tou use the `required` keyword thing here, so you know... Big Chungus moments
-  Task({required this.id, required this.task, required this.dateTime});
+  Task({this.id = 0, required this.task, required this.dateTime});
 
   @override
   set id(int _id) {
