@@ -1,3 +1,5 @@
+import 'package:app/DataBase/db_provider.dart';
+import 'package:app/Models/task_model.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,6 +30,16 @@ class _TodoAppState extends State<TodoApp> {
   Color btnColor = const Color(0xFFff955b);
   Color editColor = const Color(0xFF4044cc);
 
+  Future<List<Map<String, Object?>>> getTask() async {
+    //final testTask = Task(id: 0, task: "TestTask", dateTime: DateTime(2022));
+
+//    DBProvider.insertObject(testTask, 'tasks');
+
+    final tasks = await DBProvider.getObjects('tasks');
+
+    return tasks;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +52,57 @@ class _TodoAppState extends State<TodoApp> {
       body: Column(
         children: [
           Expanded(
-            child: ListView(),
+            child: FutureBuilder(
+              future: getTask(),
+              builder: (_, AsyncSnapshot<List<Map<String, Object?>>> taskData) {
+                switch (taskData.connectionState) {
+                  case ConnectionState.waiting:
+                    {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  case ConnectionState.done:
+                    {
+                      // NOTE: This might cause problems
+                      if (taskData.data != null && taskData.data!.isNotEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: ListView.builder(
+                            itemCount: taskData.data?.length,
+                            itemBuilder: (context, index) {
+                              var task =
+                                  taskData.data![index]['task'] as String;
+
+                              // Added the toString method to avoid null propagation
+                              var day = DateTime.parse(
+                                taskData.data![index]['creationDate'] as String,
+                              ).day.toString();
+
+                              return Container();
+
+                              //taskData.data.noSuchMethod()
+                            },
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text(
+                            'You have now task today',
+                            style: TextStyle(color: Colors.white54),
+                          ),
+                        );
+                      }
+                    }
+                  case ConnectionState.none:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.active:
+                    // TODO: Handle this case.
+                    break;
+                }
+
+                return Container();
+              },
+            ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
@@ -63,6 +125,10 @@ class _TodoAppState extends State<TodoApp> {
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                   ),
+                ),
+                // * Separates the Text Field from the Elevated Button
+                const SizedBox(
+                  width: 15,
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.only(end: 10),
