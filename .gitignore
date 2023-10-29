@@ -25,21 +25,21 @@
 .vscode/
 
 # Flutter repo-specific
-/bin/cache/
-/bin/internal/bootstrap.bat
-/bin/internal/bootstrap.sh
-/bin/mingit/
-/dev/benchmarks/mega_gallery/
-/dev/bots/.recipe_deps
-/dev/bots/android_tools/
-/dev/devicelab/ABresults*.json
-/dev/docs/doc/
-/dev/docs/flutter.docs.zip
-/dev/docs/lib/
-/dev/docs/pubspec.yaml
-/dev/integration_tests/**/xcuserdata
-/dev/integration_tests/**/Pods
-/packages/flutter/coverage/
+bin/cache/
+bin/internal/bootstrap.bat
+bin/internal/bootstrap.sh
+bin/mingit/
+dev/benchmarks/mega_gallery/
+dev/bots/.recipe_deps
+dev/bots/android_tools/
+dev/devicelab/ABresults*.json
+dev/docs/doc/
+dev/docs/flutter.docs.zip
+dev/docs/lib/
+dev/docs/pubspec.yaml
+dev/integration_tests/**/xcuserdata
+dev/integration_tests/**/Pods
+packages/flutter/coverage/
 version
 analysis_benchmark.json
 
@@ -293,26 +293,26 @@ replay_pid*
 
 #.DS_Store
 .idea/shelf
-/confluence/target
-/dependencies/repo
-/android.tests.dependencies
-/dependencies/android.tests.dependencies
-/dist
-/local
-/gh-pages
-/ideaSDK
-/clionSDK
-/android-studio/sdk
+confluence/target
+dependencies/repo
+android.tests.dependencies
+dependencies/android.tests.dependencies
+dist
+local
+gh-pages
+ideaSDK
+clionSDK
+android-studio/sdk
 #out/
-/tmp
-/intellij
+tmp
+intellij
 workspace.xml
 *.versionsBackup
-/idea/testData/debugger/tinyApp/classes*
-/jps-plugin/testData/kannotator
-/js/js.translator/testData/out/
-/js/js.translator/testData/out-min/
-/js/js.translator/testData/out-pir/
+idea/testData/debugger/tinyApp/classes*
+jps-plugin/testData/kannotator
+js/js.translator/testData/out/
+js/js.translator/testData/out-min/
+js/js.translator/testData/out-pir/
 #.gradle/
 #build/
 !**/src/**/build
@@ -362,8 +362,8 @@ libraries/tools/kotlin-test-js-runner/lib/
 buildSrcTmp/
 distTmp/
 outTmp/
-/test.output
-/kotlin-native/dist
+test.output
+kotlin-native/dist
 kotlin-ide/
 
 
@@ -647,17 +647,17 @@ tramp
 *_flymake.*
 
 # eshell files
-/eshell/history
-/eshell/lastdir
+eshell/history
+eshell/lastdir
 
 # elpa packages
-/elpa/
+elpa/
 
 # reftex files
 *.rel
 
 # AUCTeX auto folder
-/auto/
+auto/
 
 # cask packages
 .cask/
@@ -667,7 +667,7 @@ dist/
 flycheck_*.el
 
 # server auth directory
-/server/
+server/
 
 # projectiles files
 .projectile
@@ -676,7 +676,7 @@ flycheck_*.el
 .dir-locals.el
 
 # network security
-/network-security.data
+network-security.data
 
 
 ### -------------------------- Vim.gitignore  -------------------------- ###
