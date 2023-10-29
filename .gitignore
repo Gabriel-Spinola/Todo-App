@@ -1,5 +1,5 @@
 ### ------------------------- Flutter.gitignore ------------------------ ###
-
+app/
 # Miscellaneous
 *.class
 #*.lock
